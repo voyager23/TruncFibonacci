@@ -20,7 +20,7 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #  
-#  329468
+#  329468inds soln in 52 seconds
 
 def fibonnaci(n): #Finds the nth fibonnaci number
     v1, v2, v3 = 1, 1, 0    # initialise a matrix [[1,1],[1,0]]
@@ -65,8 +65,11 @@ def main(args):
             #print(fibonnaci(count))
             print(f"checking F[{count}]")
             n = fibonnaci(count)
-            while n > 999999999:
-                n //= 10
+            
+            # reduce n to 9 leftmost digits
+            n = int(str(n)[:9])
+            
+            
             if isPandigital1_9(n):
                 print("Solution @ ",count)
                 return 0
