@@ -20,7 +20,7 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #  
-#  329468inds soln in 52 seconds
+#  329468 finds soln in 52 seconds
 
 def fibonnaci(n): #Finds the nth fibonnaci number
     v1, v2, v3 = 1, 1, 0    # initialise a matrix [[1,1],[1,0]]
