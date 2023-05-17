@@ -53,6 +53,7 @@ def isPandigital1_9(n):
     
 
 # NO CORRECT SOLUTION FOUND
+
 def main(args):
     F1 = 39088169   
     F2 = 63245986   # 9 LSD of Fibonacci number
