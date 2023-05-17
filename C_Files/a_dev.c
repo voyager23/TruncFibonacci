@@ -66,11 +66,15 @@ int main(int argc, char **argv)
     
     mpz_inits(fn,f1,f2,NULL);
     
-    mpz_fib_ui(fn,40U);
+    //mpz_fib_ui(fn,40U);
+    
+    mpz_set_ui(fn,123456789U);
     
     if (isPanDigit9(fn))
     {
         gmp_printf("%Zd\n",fn);
+    } else {
+        printf("Not Pandigital\n");
     }
     
     mpz_clears(fn,f1,f2,NULL);
