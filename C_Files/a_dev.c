@@ -26,7 +26,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "gmp.h"
+#include <gmp.h>
 
 bool isPanDigit9(mpz_t n)
 // Assumes that n is a 9 digit mpz_t
@@ -37,7 +37,7 @@ bool isPanDigit9(mpz_t n)
     mpz_inits(q,r,d,NULL);
     mpz_set(q,n);
     mpz_set_ui(d,10);
-    while (q != 0)
+    while (mpz_cmp_ui(q,0) > 0)
     {
         mpz_tdiv_qr(q,r,q,d);   // determine the quotient/remainder mod 10
         if (flag[mpz_get_ui(r)])
@@ -68,7 +68,7 @@ int main(int argc, char **argv)
     
     //mpz_fib_ui(fn,40U);
     
-    mpz_set_ui(fn,123456789U);
+    mpz_set_ui(fn,123456788U);
     
     if (isPanDigit9(fn))
     {
