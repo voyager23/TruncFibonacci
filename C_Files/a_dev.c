@@ -28,7 +28,7 @@
 
 #include <gmp.h>
 
-bool isPanDigit9(mpz_t n)
+bool isPanDigit9(mpz_t n, bool head)
 {
     mpz_t q,r,d;
     mpz_inits(q,r,d,NULL);
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
 		mpz_set(f1,f2);
 		mpz_set(f2,fn);
 		
-		if (isPanDigit9(fn))
+		if (isPanDigit9(fn, false))
 		{
 			gmp_printf("%u is Pandigital: %Zd\n",count,fn);
 			
