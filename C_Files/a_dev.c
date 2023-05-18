@@ -61,6 +61,7 @@ bool isPanDigit9(mpz_t n)
 }
 
 int main(int argc, char **argv)
+//============================
 {
     mpz_t fn,f2,f1;
     
