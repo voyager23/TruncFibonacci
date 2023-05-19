@@ -25,15 +25,28 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-
 #include <gmp.h>
 
+//----------------------------------------------------------
 bool isPanDigit9(mpz_t n, bool head)
 {
     mpz_t q,r,d;
     mpz_inits(q,r,d,NULL);
     mpz_set_ui(d,10);
-    mpz_tdiv_r_ui(q,n,1000000000U);	// set q to last 9 digits of n
+    char *p;
+    
+    if (!head)
+    {
+		mpz_tdiv_r_ui(q,n,1000000000U);	// set q to last 9 digits of n
+	} else { //get leading 9 digits
+		p = (char*)(malloc(mpz_sizeinbase(n,10) + 2));	// allocate memory
+		mpz_get_str(p,10,n);	// convert to string
+		printf("%s\n",p);
+		*(p+9) = 0;				// set null value
+		mpz_set_str(q,p,10);	// convert to mpz
+		//free(p);
+	}
+	
     bool flag[10]={false};
      
     while (mpz_cmp_ui(q,0) > 0)
@@ -55,12 +68,12 @@ bool isPanDigit9(mpz_t n, bool head)
         {
             return false;
         }
-    
     return true;
 }
 
+//----------------------------------------------------------
+
 int main(int argc, char **argv)
-//============================
 {
     mpz_t fn,f2,f1;
     unsigned long count = 39;
@@ -69,7 +82,6 @@ int main(int argc, char **argv)
     
     mpz_set_ui(f1, 39088169U);
     mpz_set_ui(f2, 63245986U);
-    //mpz_fib_ui(fn,40U);
     
 	while (true) // start loop
 	{
@@ -79,15 +91,16 @@ int main(int argc, char **argv)
 		mpz_set(f1,f2);
 		mpz_set(f2,fn);
 		
-		if (isPanDigit9(fn, false))
+		if (isPanDigit9(fn, false))	// check tail
 		{
-			gmp_printf("%u is Pandigital: %Zd\n",count,fn);
-			
-			// test first 9 digits
-			
+			gmp_printf("F[%u] is Pandigital_tail:\n",count);
+			// check head 
+			if (isPanDigit9(fn,true))
+			{
+				gmp_printf("F[%u] is Pandigital_head: %Zd\n",count,fn);
+				return 0;
+			}
 			mpz_clears(fn,f1,f2,NULL);
-			return 0;
-			
 		} else {
 			// gmp_printf("Not Pandigital: %Zd\n",fn);
 		}
