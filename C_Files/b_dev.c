@@ -40,18 +40,22 @@ bool isPanDigit9(mpz_t n, bool head)
 		mpz_tdiv_r_ui(q,n,1000000000U);	// set q to last 9 digits of n
 	} else { 
 		// HEAD
+		//printf("Head in...");
 		p = (char*)(malloc(mpz_sizeinbase(n,10) + 8));	// allocate memory
 		mpz_get_str(p,10,n);	// convert to string
 		
-		printf("%s\n",p);
+		//~ printf("%s\n",p);
 		*(p+9) = 0;				// set null value
-		printf("%s\n",p);
+		//~ printf("%s\n",p);
 		
 		mpz_set_str(q,p,10);	// convert to mpz in 'q'
+		
 		free(p);
+		//printf("out\n");
 	}
 	
-    bool flag[10]={false};   
+    bool flag[10]={false};
+    //gmp_printf("Testing %Zd\n",q);
     while (mpz_cmp_ui(q,0) > 0)
     {
         mpz_tdiv_qr_ui(q,r,q,10U);   // determine the quotient/remainder mod 10
@@ -64,14 +68,13 @@ bool isPanDigit9(mpz_t n, bool head)
         }        
     }
     
-    //~ // test flags
-    //~ int i = 1;
-    //~ while (i < 10)
-        //~ if (flag[i++] == false)
-        //~ {
-            //~ return false;
-        //~ }
-        
+    // test flags
+    int i = 1;
+    while (i < 10)
+        if (flag[i++] == false)
+        {
+            return false;
+        }
     mpz_clears(q,r,d,NULL);
     return true;
 }
@@ -95,6 +98,7 @@ int main(int argc, char **argv)
 		count += 1;
 		mpz_set(f1,f2);
 		mpz_set(f2,fn);
+		//mpz_fib_ui(fn, count);
 		
 		if (isPanDigit9(fn, false))	// check tail
 		{
@@ -102,7 +106,7 @@ int main(int argc, char **argv)
 			// check head 
 			if (isPanDigit9(fn,true))
 			{
-				gmp_printf("F[%u] has Pandigital head: %Zd\n",count,fn);
+				printf("F[%u] has Pandigital head\n",count);
 				mpz_clears(fn,f1,f2,NULL);
 				break;
 			}

@@ -7,7 +7,7 @@ ifeq ($(UNAME),Darwin)
 	gcc $(SOURCE) -I/opt/homebrew/include  -L/opt/homebrew/lib  -lgmp -o tfib
 else
 	@echo "?Linux?"
-	gcc $(SOURCE) -lgmp -o tfib
+	gcc $(SOURCE) -g -lgmp -o tfib
 endif
 	
 isprime:
