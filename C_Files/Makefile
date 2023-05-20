@@ -1,12 +1,13 @@
 UNAME := $(shell uname)
+SOURCE = b_dev.c
 
 tfib:
 ifeq ($(UNAME),Darwin)
 	@echo "Macbook"
-	gcc a_dev.c -I/opt/homebrew/include  -L/opt/homebrew/lib  -lgmp -o tfib
+	gcc $(SOURCE) -I/opt/homebrew/include  -L/opt/homebrew/lib  -lgmp -o tfib
 else
 	@echo "?Linux?"
-	gcc a_dev.c -lgmp -o tfib
+	gcc $(SOURCE) -lgmp -o tfib
 endif
 	
 isprime:

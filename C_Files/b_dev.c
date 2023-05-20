@@ -1,5 +1,5 @@
 /*
- * a_dev.c
+ * b_dev.c
  * 
  * Copyright 2023 mike <mike@pop-os>
  * 
@@ -35,39 +35,44 @@ bool isPanDigit9(mpz_t n, bool head)
     mpz_set_ui(d,10);
     char *p;
     
-    if (!head)
+    if (!head)	// TAIL
     {
 		mpz_tdiv_r_ui(q,n,1000000000U);	// set q to last 9 digits of n
-	} else { //get leading 9 digits
-		p = (char*)(malloc(mpz_sizeinbase(n,10) + 2));	// allocate memory
+	} else { 
+		// HEAD
+		p = (char*)(malloc(mpz_sizeinbase(n,10) + 8));	// allocate memory
 		mpz_get_str(p,10,n);	// convert to string
+		
 		printf("%s\n",p);
 		*(p+9) = 0;				// set null value
-		mpz_set_str(q,p,10);	// convert to mpz
-		//free(p);
+		printf("%s\n",p);
+		
+		mpz_set_str(q,p,10);	// convert to mpz in 'q'
+		free(p);
 	}
 	
-    bool flag[10]={false};
-     
+    bool flag[10]={false};   
     while (mpz_cmp_ui(q,0) > 0)
     {
         mpz_tdiv_qr_ui(q,r,q,10U);   // determine the quotient/remainder mod 10
         if (flag[mpz_get_ui(r)])
         {
+			mpz_clears(q,r,d,NULL);
             return false;
         } else {
             flag[mpz_get_ui(r)] = true;
         }        
     }
-    mpz_clears(q,r,d,NULL);
     
-    // test flags
-    int i = 1;
-    while (i < 10)
-        if (flag[i++] == false)
-        {
-            return false;
-        }
+    //~ // test flags
+    //~ int i = 1;
+    //~ while (i < 10)
+        //~ if (flag[i++] == false)
+        //~ {
+            //~ return false;
+        //~ }
+        
+    mpz_clears(q,r,d,NULL);
     return true;
 }
 
@@ -85,28 +90,28 @@ int main(int argc, char **argv)
     
 	while (true) // start loop
 	{
-		mpz_set(fn,f2);
-		mpz_add(fn, fn, f1);	// fn = f2 + f1
+		//mpz_set(fn,f2);
+		mpz_add(fn, f2, f1);	// fn = f2 + f1
 		count += 1;
 		mpz_set(f1,f2);
 		mpz_set(f2,fn);
 		
 		if (isPanDigit9(fn, false))	// check tail
 		{
-			gmp_printf("F[%u] is Pandigital_tail:\n",count);
+			gmp_printf("F[%u] has Pandigital tail:\n",count);
 			// check head 
 			if (isPanDigit9(fn,true))
 			{
-				gmp_printf("F[%u] is Pandigital_head: %Zd\n",count,fn);
-				return 0;
+				gmp_printf("F[%u] has Pandigital head: %Zd\n",count,fn);
+				mpz_clears(fn,f1,f2,NULL);
+				break;
 			}
-			mpz_clears(fn,f1,f2,NULL);
 		} else {
 			// gmp_printf("Not Pandigital: %Zd\n",fn);
 		}
 	}	// end loop
 	
-    mpz_clears(fn,f1,f2,NULL);
+    //mpz_clears(fn,f1,f2,NULL);
 	return 0;
 }
 
